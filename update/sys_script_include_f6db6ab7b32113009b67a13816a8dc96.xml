@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_bn.ThingReserver</api_name>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>ThingReserver</name>
+        <script><![CDATA[var ThingReserver = Class.create();
+ThingReserver.prototype = {
+	
+	R_TABLE : "x_bn_reservation",
+    T_TABLE : "x_bn_thing",
+	
+    initialize: function() {
+    },
+	
+	canReserve : function(/*GlideRecord*/ thing, /*GlideDateTime*/ from, /*GlideDateTime*/ until, /*GlideRecord*/ by) {
+		
+		gs.debug("Checking by date.");
+
+		var reservations = new GlideRecord(this.R_TABLE);
+		reservations.addQuery("thing", thing.getUniqueValue());
+		reservations.addQuery("thing_table", thing.getRecordClassName());
+		
+		//is there a thing where the reservations starts within this window already?
+		var qc1 = reservations.addQuery("reserved_from", ">=", from);
+		qc1.addCondition("reserved_from", "<=", until);
+		
+		//is there a thing where the reservation ends within this window already?
+		var qc2 = qc1.addOrCondition("reserved_to", ">=", from);
+		qc2.addCondition("reserved_to", "<=", until);
+		
+		gs.debug("Reservation query condition is " + reservations.getEncodedQuery());
+		
+		reservations.query();
+		
+		return !reservations.hasNext();
+	},
+	
+	reserve : function(/*GlideRecord*/ thing, /*GlideDateTime*/ from, /*GlideDateTime*/ until, /*GlideRecord*/ by) {
+		if (!this.canReserve(thing, from, until, by)) {
+			return false;
+		}
+		
+		var newReservation = new GlideRecord(this.R_TABLE);
+		newReservation.newRecord();
+		newReservation.setValue("thing", thing.getValue("sys_id"));
+		newReservation.setValue("thing_table", thing.getRecordClassName());
+		newReservation.setValue("reserved_from", from.toString());
+		newReservation.setValue("reserved_to", until.toString());
+		newReservation.setValue("reserved_by", by.getValue("sys_id"));
+		
+		gs.debug("Inserting new reservation for {0} from {1} until {2}", thing.getDisplayValue(), from.getValue(), until.getValue());
+		
+		if (newReservation.insert())
+			return newReservation;
+		
+		gs.debug("Insert of new reservation failed {0}", newReservation.getLastErrorMessage());
+		return false;
+	},
+	
+	cancelReservation : function(/*GlideRecord*/ thing, /*GlideDateTime*/ from, /*GlideDateTime*/ until, /*GlideRecord*/ by) {
+		var reservation = new GlideRecord(this.R_TABLE);
+		reservation.addQuery("thing", thing.getValue("sys_id"));
+		reservation.addQuery("thing_table", thing.getRecordClassName());
+		reservation.addQuery("reserved_from", from.toString());
+		reservation.addQuery("reserved_to", until.toString());
+		reservation.addQuery("reserved_by", by.getValue("sys_id"));
+		reservation.query();
+		
+		if (reservation.next()) {
+			var thing_id = reservation.getValue("thing");
+			var thing_table = reservation.getValue("thing_table");
+			reservation.deleteRecord();
+		}
+	},
+	
+	nextAvailableReservation : function(/*GlideRecord*/ thing) {
+		//this is a really simplistic model that just returns 5 minutes later than the end date for the last reservation
+		var reservation = new GlideRecord(this.R_TABLE);
+		reservation.addQuery("thing", thing.getUniqueValue());
+		reservation.addQuery("thing_table", thing.getRecordClassName());
+		reservation.addQuery("reserved_to", ">", new GlideDateTime());
+		reservation.orderByDesc("reserved_to");
+		reservation.query();
+		
+		if (reservation.hasNext()) {
+			var minimum_seconds = parseInt(gs.getProperty("x_bn.min_reservation_seconds", 300), 10);
+			var hasUntil = new GlideDateTime();
+			hasUntil.setNumericValue(reservation.reserved_to.getNumericValue());
+			hasUntil.addSeconds(minimum_seconds);
+			
+			return hasUntil;
+		}
+		
+		//or right now, if the thing has never been reserved or all reservations are in the past
+		return new GlideDateTime();
+	},
+
+    type: 'ThingReserver'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-04-25 16:13:53</sys_created_on>
+        <sys_id>f6db6ab7b32113009b67a13816a8dc96</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ThingReserver</sys_name>
+        <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+        <sys_update_name>sys_script_include_f6db6ab7b32113009b67a13816a8dc96</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-04-25 16:13:53</sys_updated_on>
+    </sys_script_include>
+</record_update>

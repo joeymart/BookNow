@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Reservation" max_length="40" name="x_bn_reservation" type="collection">
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" display="true" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Reserved by" max_length="32" name="reserved_by" reference="sys_user" type="reference"/>
+        <element label="Reserved from" max_length="40" name="reserved_from" type="glide_date_time"/>
+        <element label="Reserved to" max_length="40" name="reserved_to" type="glide_date_time"/>
+        <element dependent="thing_table" dependent_on_field="thing_table" label="Thing" max_length="32" name="thing" type="document_id" use_dependent_field="true"/>
+        <element attributes="allow_public=true" label="Thing table" max_length="80" name="thing_table" type="table_name"/>
+        <index name="index">
+            <element name="reserved_by"/>
+        </index>
+        <index name="index2">
+            <element name="thing"/>
+        </index>
+    </element>
+</database>

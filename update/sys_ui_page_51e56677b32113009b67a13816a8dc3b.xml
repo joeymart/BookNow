@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[      /*
+       * Click the map to set a new location for the Street View camera.
+       */
+
+    var map;
+    var panorama;
+	var markers = [];
+	var openInfoWindows = [];
+	var sv;
+
+      function initMap() {
+        var chicago = {lat: 41.8756, lng: -87.6297};
+        sv = new google.maps.StreetViewService();
+
+        panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'));
+
+        // Set up the map.
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: chicago,
+          zoom: 13,
+          streetViewControl: false
+        });
+		  
+		google.maps.event.addListenerOnce(map, "bounds_changed", function() { 
+			var NEpoint = { 
+				latitude : map.getBounds().getNorthEast().lat(),
+				longitude : map.getBounds().getNorthEast().lng()
+			}
+		
+			var SWpoint = {
+				latitude : map.getBounds().getSouthWest().lat(),
+				longitude : map.getBounds().getSouthWest().lng()
+			}
+		
+			sn_film.GetPoints.getFilmPoints(SWpoint, NEpoint, function(points) {
+				addPoints(points, 'film');
+			});
+		});
+		
+		
+        // Set the initial Street View camera to the center of the map
+        sv.getPanorama({location: chicago, radius: 50}, processSVData);
+      }
+
+      function processSVData(data, status) {
+        if (status === 'OK') {
+			
+          panorama.setPano(data.location.pano);
+          panorama.setPov({
+            heading: 270,
+            pitch: 0
+          });
+          panorama.setVisible(true);
+
+		} else {
+          console.error('Street View data not found for this location.');
+        }
+      }
+	
+
+function closeInfoWindows() {
+	for (var i = 0; i < openInfoWindows.length;i++) {
+		var infoWindow = openInfoWindows[i];
+		infoWindow.close();
+	}
+	
+	openInfoWindows = [];
+}
+
+
+function addPoints(points, type) {
+		// Look for a nearby Street View panorama when the map is clicked.
+        // getPanoramaByLocation will return the nearest pano when the
+        // given radius is 50 meters or less.
+
+	var icon;
+	if (type == 'food')
+		icon = '/food.png';
+	if (type == 'film')
+		icon = '/film.png';
+	
+	for (var i = 0; i < points.length; i++) {
+		var point = points[i];
+		var markObject = {
+          position: {lat : parseFloat(point.latitude), lng: parseFloat(point.longitude)},
+          map: map,
+          title: point.name,
+        };
+	
+		if (icon)
+			markObject.icon = icon;
+		
+		var marker = new google.maps.Marker(markObject);
+		
+		attachEvents(marker, point, type);
+		markers.push(marker);
+	}
+}
+
+function applyTemplate(point, type) {
+	var str = "";
+	
+	if (type == 'film') {
+		str = "<b>" + point.name + "</b><br />";
+		str += point.street_number_from +  " " + point.street_name + "<br />";
+		str += "Chicago, IL" + "</br />";
+		
+		if (point.primary_contact_first !== "undefined")
+			str += point.primary_contact_first + " ";
+		
+		if (point.primary_contact_last !== "undefined")
+			str += point.primary_contact_last + "<br />";
+	}
+	
+	if (type == 'food') {
+		str = "<b>" + point.name + "</b><br />";
+		str += point.address + "<br />";
+		str += point.city + ", IL" + "</br />";
+		str += "<a href='/sn_film_restaurants.do?sys_id=" + point.sys_id + "'>Book a table</a>";
+	}
+	
+	return str;
+}
+
+function attachEvents(marker, point, type) {
+	var infowindow = new google.maps.InfoWindow({
+		content: applyTemplate(point, type)
+	});
+		
+	marker.addListener('click', function(event) {
+		sv.getPanorama({location: event.latLng, radius: 50}, processSVData);
+		closeInfoWindows();
+		infowindow.open(marker.get('map'), marker);
+		openInfoWindows.push(infowindow);
+		
+		if (type == 'film')
+			sn_film.GetPoints.getNearbyPoints(point, 'food', function(points) {
+				addPoints(points, 'food');
+			});
+	});
+}]]></client_script>
+        <description/>
+        <direct>true</direct>
+        <endpoint>x_bn_Map.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+<html>
+  <head>
+    <title>Mapping Things with Street View</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+	<script type="text/javascript">
+		window.g_ck = "$[gs.getSession().getSessionToken()]";
+	</script>
+	  <script src="/sn_film.GeoPoint.jsdbx" />
+	  <script src="/sn_film.GetPoints.jsdbx" />
+  </head>
+  <body>
+    <div id="map" style="width: 45%; height: 100%;float:left"></div>
+    <div id="pano" style="width: 45%; height: 100%;float:left"></div>
+
+    <script async="true" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgQJ4m9weVcboWCUNz5smsUk52aF6XGwA&amp;callback=initMap" />
+  </body>
+</html>
+</j:jelly>]]></html>
+        <name>Map</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-04-25 15:42:53</sys_created_on>
+        <sys_id>51e56677b32113009b67a13816a8dc3b</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Map</sys_name>
+        <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+        <sys_update_name>sys_ui_page_51e56677b32113009b67a13816a8dc3b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-04-25 15:52:06</sys_updated_on>
+    </sys_ui_page>
+</record_update>

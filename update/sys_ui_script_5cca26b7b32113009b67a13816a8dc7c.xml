@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description/>
+        <global>false</global>
+        <name>x_bn.GetPoints</name>
+        <script><![CDATA[var x_bn = x_bn || {};
+
+x_bn.GetPoints = (function() {
+    "use strict";
+	var NEARBY = 0.5; //miles
+
+    function doXHR(table, query, callback) {
+        var xhttp = new XMLHttpRequest();
+        var GETSTRING = "/api/now/table/" + table + "?" + query;
+        xhttp.open("GET", GETSTRING);
+		xhttp.addEventListener("error", function() { 
+			console.error("Connection error", xhttp);
+		});
+
+		xhttp.addEventListener("load", function() {
+			var responseObj = JSON.parse(xhttp.response);
+			if (responseObj.result)
+				callback(responseObj.result);
+			else
+				console.error("No result for query", xhttp);
+        });
+
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("X-UserToken", window.g_ck); //this is the oAuth token assigned to the user at login. It's what SN uses for all it's rest calls for the UI.. like getting the updated ticket info when someone else updates the ticket..
+        xhttp.send();
+
+        return xhttp;
+    }
+
+    function copyObj(obj) {
+        var copy = {};
+        for (var prop in obj)
+            copy[prop] = obj[prop];
+        return copy;
+    }
+	
+	function convertToSimplePoint(point) {
+		var newPoint = {};
+		if (typeof point.longitude == 'function')
+			newPoint.longitude = point.longitude();
+		else if (point.hasOwnProperty('lng'))
+			newPoint.longitude = point.lng;
+		else
+			newPoint.longitude = point.longitude;
+		
+		if (typeof point.latitude == 'function')
+			newPoint.latitude = point.latitude();
+		else if (point.hasOwnProperty('lat'))
+			newPoint.latitude = point.lat;
+		else
+			newPoint.latitude = point.latitude;
+		
+		return newPoint;
+	}
+
+    return {
+
+        getNearbyPoints: function(point, type, callback) {
+			point = convertToSimplePoint(point);
+			
+			var gp = new GeoPoint(point.latitude, point.longitude);
+			var boundingBox = gp.boundingCoordinates(NEARBY, false /*false = miles, true = kilometers*/);
+			
+			var SWpoint = convertToSimplePoint(boundingBox[0]);
+			var NEpoint = convertToSimplePoint(boundingBox[1]);
+			
+			if (type == 'film')
+				return this.getFilmPoints(SWpoint, NEpoint, callback);
+			
+			if (type == 'food')
+				return this.getFoodPoints(SWpoint, NEpoint, callback);
+			
+			return getPointsInBox(SWpoint, NEpoint, callback);
+
+        },
+
+        getPointsInBox: function(SWpoint, NEpoint, callback) {
+			SWpoint = convertToSimplePoint(SWpoint);
+			NEpoint = convertToSimplePoint(NEpoint);
+            /*
+			var maxLat = NEpoint.latitude;
+            var maxLong = NEpoint.longitude;
+            var minLat = SWpoint.latitude;
+            var minLong = SWpoint.longitude;
+
+            
+            The simple framework below can help you decode the location pairs.
+            	+ + : North and East 
+            	+ -  : North and West 
+            	- -   : South and West 
+            	- +  : South and East
+            	
+            Note that the centerpoint for this framework is 0,0 where the Prime Meridian and the Equator intersect, in the Gulf of Guinea.
+            */
+
+            var allPoints = [];
+			
+			this.getFilmPoints(SWpoint, NEpoint, function(film_points) {
+				allPoints.concat(film_points);
+				
+				this.getFoodPoints(SWpoint, NEpoint, function(food_points) {
+					allPoints.concat(food_points);
+					callback(allPoints);
+				});
+			});
+			
+			return allPoints;
+        },
+
+        getFilmPoints: function(SWpoint, NEpoint, callback) {
+			SWpoint = convertToSimplePoint(SWpoint);
+			NEpoint = convertToSimplePoint(NEpoint);
+            
+			var filmPoints = [];
+            var fieldsToReturn = "name,latitude,longitude,street_number_from,street_name,primary_contact_first,primary_contact_last,sys_id";
+            var query = "";
+
+            if (NEpoint && SWpoint)
+                query += "sysparm_query=latitude%3C%3D" + NEpoint.latitude + "^longitude%3C%3D" + NEpoint.longitude + "^latitude>%3D" + SWpoint.latitude + "^longitude>%3D" + SWpoint.longitude + "&";
+
+            query += "sysparm_fields=" + fieldsToReturn + "&sysparm_exclude_reference_link=true&sysparm_limit=50&sysparm_order=end_date&sysparm_order_direction=desc";
+
+            doXHR('sn_film_locations', query, function(result) {
+                for (var i = 0; i < result.length; i++) {
+                    var copy = copyObj(result[i]);
+                    copy._point_type = 'film';
+                    filmPoints.push(copy);
+                }
+				callback(filmPoints);
+
+            });
+
+			return filmPoints;
+        },
+
+        getFoodPoints: function(SWpoint, NEpoint, callback) {
+			SWpoint = convertToSimplePoint(SWpoint);
+			NEpoint = convertToSimplePoint(NEpoint);
+
+			var foodPoints = [];
+            var fieldsToReturn = "name,latitude,longitude,address,city,zip,sys_id";
+            var query = "sysparm_query=results%3DPass";
+
+            if (NEpoint && SWpoint)
+                query += "^latitude%3C%3D" + NEpoint.latitude + "^longitude%3C%3D" + NEpoint.longitude + "^latitude>%3D" + SWpoint.latitude + "^longitude>%3D" + SWpoint.longitude;
+
+            query += "&sysparm_fields=" + fieldsToReturn + "&sysparm_exclude_reference_link=true&sysparm_limit=50&sysparm_order=inspection_date&sysparm_order_direction=desc";
+
+            doXHR('sn_film_restaurants', query, function(result) {
+                for (var i = 0; i < result.length; i++) {
+                    var copy = copyObj(result[i]);
+                    copy._point_type = 'food';
+                    foodPoints.push(copy);
+                }
+				callback(foodPoints);
+            });
+
+            return foodPoints;
+        },
+
+        type: "GetPoints"
+    };
+}());
+]]></script>
+        <script_name>GetPoints</script_name>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-04-25 16:05:48</sys_created_on>
+        <sys_id>5cca26b7b32113009b67a13816a8dc7c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_bn.GetPoints</sys_name>
+        <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+        <sys_update_name>sys_ui_script_5cca26b7b32113009b67a13816a8dc7c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-04-25 16:05:48</sys_updated_on>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>

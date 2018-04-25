@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="reserved_by" label="Reserved by" language="en" table="x_bn_reservation">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>reserved_by</element>
+            <help/>
+            <hint/>
+            <label>Reserved by</label>
+            <language>en</language>
+            <name>x_bn_reservation</name>
+            <plural>Reserved by</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-04-25 15:27:07</sys_created_on>
+            <sys_id>03a26237b32113009b67a13816a8dcac</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Reserved by</sys_name>
+            <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+            <sys_update_name>sys_documentation_x_bn_reservation_reserved_by_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-04-25 15:27:07</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>
