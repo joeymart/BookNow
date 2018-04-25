@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_extension_instance">
+    <sys_extension_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <order>100</order>
+        <point>x_bn.PointProvider</point>
+        <script_include display_value="PointAdder">eb4088c4b37113009b67a13816a8dc7a</script_include>
+        <sys_class_name>sys_extension_instance</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-04-25 22:16:12</sys_created_on>
+        <sys_id>2b4088c4b37113009b67a13816a8dc7d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_bn.PointProvider</sys_name>
+        <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+        <sys_update_name>sys_extension_instance_2b4088c4b37113009b67a13816a8dc7d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-04-25 22:16:12</sys_updated_on>
+    </sys_extension_instance>
+</record_update>

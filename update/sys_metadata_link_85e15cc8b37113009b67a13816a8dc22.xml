@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>update</directory>
+        <documentkey>811d8888b37113009b67a13816a8dc59</documentkey>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="x_bn_location">
+    <x_bn_location action="INSERT_OR_UPDATE">
+        <latitude>41.9108453</latitude>
+        <longitude>-87.6320888</longitude>
+        <name>Village Theatre</name>
+        <sys_class_name>x_bn_location</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-04-25 23:12:14</sys_created_on>
+        <sys_id>811d8888b37113009b67a13816a8dc59</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-04-25 23:12:14</sys_updated_on>
+    </x_bn_location>
+</record_update>
+]]></payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-04-25 23:33:02</sys_created_on>
+        <sys_id>85e15cc8b37113009b67a13816a8dc22</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Village Theatre</sys_name>
+        <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+        <sys_update_name>sys_metadata_link_85e15cc8b37113009b67a13816a8dc22</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-04-25 23:33:02</sys_updated_on>
+        <tablename>x_bn_location</tablename>
+    </sys_metadata_link>
+</record_update>
