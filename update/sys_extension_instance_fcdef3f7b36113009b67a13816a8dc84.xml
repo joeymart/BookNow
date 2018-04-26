@@ -3,7 +3,7 @@
         <active>true</active>
         <order>100</order>
         <point>x_bn.PointProvider</point>
-        <script_include display_value="PointProvider">f0def3f7b36113009b67a13816a8dc7c</script_include>
+        <script_include display_value="DefaultPointProvider">f0def3f7b36113009b67a13816a8dc7c</script_include>
         <sys_class_name>sys_extension_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-04-25 22:09:44</sys_created_on>
