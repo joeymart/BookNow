@@ -23,6 +23,21 @@ ThingReserver.prototype = {
 		if (!by)
 			by = gs.getUserID();
 		
+		var canReserve = true;
+		try {
+			var eps = new GlideScriptedExtensionPoint().getExtensions("CanReserve");
+			eps.forEach(function(ep) {
+				if (ep.handles(thing)) {
+					canReserve = ep.canReserve(thing, from, until, by);
+				}
+			});
+		} catch (ex) {
+			gs.error("Error running ShouldAllow extension points!");
+		}
+		
+		if (!canReserve)
+			return false;
+		
 		gs.debug("Checking by date.");
 
 		var reservations = new GlideRecord(this.R_TABLE);
@@ -128,13 +143,13 @@ ThingReserver.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-04-25 16:13:53</sys_created_on>
         <sys_id>f6db6ab7b32113009b67a13816a8dc96</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>ThingReserver</sys_name>
         <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
         <sys_update_name>sys_script_include_f6db6ab7b32113009b67a13816a8dc96</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-04-25 20:26:29</sys_updated_on>
+        <sys_updated_on>2018-04-30 21:24:51</sys_updated_on>
     </sys_script_include>
 </record_update>
