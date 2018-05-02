@@ -3,38 +3,42 @@
         <active>true</active>
         <description/>
         <global>false</global>
-        <name>x_bn.PointAdder</name>
+        <name>x_bn.DivvyTemplate</name>
         <script><![CDATA[(function(pinRegistry) {
-	pinRegistry['x_bn_location'] = {
+	var table = "x_bn_dock";
+	var fields = "name, latitude,longitude,comment";
+
+	pinRegistry["x_bn_dock"] = {
 		getPoints : function(SWpoint, NEpoint, callback) {
-			x_bn.GetPoints.getPoints(SWpoint, NEpoint, callback);
+			x_bn.GetPoints.getPointsForTable(table, fields, SWpoint, NEpoint, callback);
 		},
-		
+
 		getTemplate : function(point) {
 			var template = "<b>" + point.name + "</b><br />";
+			template += point.comment + "<br />";
 			template += "Chicago, IL" + "</br />";
-			template += "<a href='/x_bn_location.do?sys_id=" + point.sys_id + "'>Click</a>";
+			template += "<a href='/x_bn_dock.do?sys_id=" + point.sys_id + "'>Click</a>";
 			return template;
 		},
 		
 		getCustomMarker : function() {
-			return "/landmark.png";
+			return "/bike.png";
 		}
 	}
 }(pinRegistry));]]></script>
-        <script_name>PointAdder</script_name>
+        <script_name>DivvyTemplate</script_name>
         <sys_class_name>sys_ui_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-04-25 22:47:11</sys_created_on>
-        <sys_id>6d800cc4b37113009b67a13816a8dc03</sys_id>
-        <sys_mod_count>3</sys_mod_count>
-        <sys_name>x_bn.PointAdder</sys_name>
+        <sys_created_on>2018-05-01 22:19:49</sys_created_on>
+        <sys_id>b77abaf5b3f513009b67a13816a8dc41</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>x_bn.DivvyTemplate</sys_name>
         <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
         <sys_policy/>
         <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
-        <sys_update_name>sys_ui_script_6d800cc4b37113009b67a13816a8dc03</sys_update_name>
+        <sys_update_name>sys_ui_script_b77abaf5b3f513009b67a13816a8dc41</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-05-02 01:21:37</sys_updated_on>
+        <sys_updated_on>2018-05-02 01:13:19</sys_updated_on>
         <use_scoped_format>false</use_scoped_format>
     </sys_ui_script>
 </record_update>
