@@ -3,5 +3,6 @@
         <element label="Latitude" max_length="40" name="latitude" type="float"/>
         <element label="Longitude" max_length="40" name="longitude" type="float"/>
         <element display="true" label="Name" max_length="100" name="name" type="string"/>
+        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
     </element>
 </database>
