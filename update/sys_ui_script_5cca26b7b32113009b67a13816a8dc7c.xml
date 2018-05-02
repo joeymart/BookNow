@@ -28,7 +28,7 @@ x_bn.GetPoints = (function() {
 
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.setRequestHeader("Accept", "application/json");
-        xhttp.setRequestHeader("X-UserToken", window.g_ck); //this is the oAuth token assigned to the user at login. It's what SN uses for all it's rest calls for the UI.. like getting the updated ticket info when someone else updates the ticket..
+        xhttp.setRequestHeader("X-UserToken", window.g_ck);
         xhttp.send();
 
         return xhttp;
@@ -75,11 +75,19 @@ x_bn.GetPoints = (function() {
             
 			var points = [];
             var query = "";
+			
+			if (window.hasOwnProperty("isLocationExtended") && window.isLocationExtended)
+				query = "sysparm_query=sys_class_name%3D" + table + "^";
+			else
+				query = "sysparm_query=";
 
             if (NEpoint && SWpoint)
-                query += "sysparm_query=sys_class_name%3D" + table + "^latitude%3C%3D" + NEpoint.latitude + "^longitude%3C%3D" + NEpoint.longitude + "^latitude>%3D" + SWpoint.latitude + "^longitude>%3D" + SWpoint.longitude + "&";
+                query += "latitude%3C%3D" + NEpoint.latitude + "^longitude%3C%3D" + NEpoint.longitude + "^latitude>%3D" + SWpoint.latitude + "^longitude>%3D" + SWpoint.longitude;
 
-            query += "sysparm_fields=" + fields + "&sysparm_exclude_reference_link=true&sysparm_limit=50";
+            query += "&sysparm_fields=" + fields + "&sysparm_exclude_reference_link=true&sysparm_limit=50";
+			
+			if (window.hasOwnProperty("isLocationExtended") && window.isLocationExtended)
+				query = "sysparm_query=sys_class_name%3D" + table + ""
 
             doXHR(table, query, function(result) {
                 for (var i = 0; i < result.length; i++) {
@@ -100,14 +108,14 @@ x_bn.GetPoints = (function() {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-04-25 16:05:48</sys_created_on>
         <sys_id>5cca26b7b32113009b67a13816a8dc7c</sys_id>
-        <sys_mod_count>6</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>x_bn.GetPoints</sys_name>
         <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
         <sys_policy/>
         <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
         <sys_update_name>sys_ui_script_5cca26b7b32113009b67a13816a8dc7c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-05-02 01:24:19</sys_updated_on>
+        <sys_updated_on>2018-05-02 13:50:31</sys_updated_on>
         <use_scoped_format>false</use_scoped_format>
     </sys_ui_script>
 </record_update>
