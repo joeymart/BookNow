@@ -53,7 +53,7 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-04-25 15:27:05</sys_created_on>
-        <sys_id>1b059e82b3f913009b67a13816a8dcb2</sys_id>
+        <sys_id>8f0de6c2b37113009b67a13816a8dccb</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Thing</sys_name>
         <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
@@ -61,7 +61,7 @@
         <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
         <sys_update_name>sys_dictionary_x_bn_reservation_thing</sys_update_name>
         <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2018-05-02 14:14:00</sys_updated_on>
+        <sys_updated_on>2018-05-02 15:58:51</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
