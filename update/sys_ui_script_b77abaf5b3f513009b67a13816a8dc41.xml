@@ -6,10 +6,13 @@
         <name>x_bn.DivvyTemplate</name>
         <script><![CDATA[(function(pinRegistry) {
 	var table = "x_bn_dock";
-	var fields = "name, latitude,longitude,comment";
+	var fields = "name,latitude,longitude,comment";
 
 	pinRegistry["x_bn_dock"] = {
 		getPoints : function(SWpoint, NEpoint, callback) {
+			console.log(SWpoint);
+			console.log(NEpoint);
+			
 			x_bn.GetPoints.getPointsForTable(table, fields, SWpoint, NEpoint, callback);
 		},
 
@@ -31,14 +34,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-05-01 22:19:49</sys_created_on>
         <sys_id>b77abaf5b3f513009b67a13816a8dc41</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>x_bn.DivvyTemplate</sys_name>
         <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
         <sys_policy/>
         <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
         <sys_update_name>sys_ui_script_b77abaf5b3f513009b67a13816a8dc41</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-05-02 01:13:19</sys_updated_on>
+        <sys_updated_on>2018-05-02 16:10:04</sys_updated_on>
         <use_scoped_format>false</use_scoped_format>
     </sys_ui_script>
 </record_update>
