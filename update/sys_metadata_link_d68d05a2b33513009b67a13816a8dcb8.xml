@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>update</directory>
+        <documentkey>5b3c41a2b33513009b67a13816a8dce9</documentkey>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="x_bn_thing">
+    <x_bn_thing action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Thing One is one of a pair of mischief-causing twins. Can only be tamed by a net, and can only be removed by a behatted feline. Enjoys flying kites and causing disorder.</description>
+        <location/>
+        <name>Thing One</name>
+        <number>THNG0001001</number>
+        <sys_class_name>x_bn_thing</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-03 22:16:46</sys_created_on>
+        <sys_id>5b3c41a2b33513009b67a13816a8dce9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-03 22:16:46</sys_updated_on>
+    </x_bn_thing>
+</record_update>
+]]></payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-03 22:18:27</sys_created_on>
+        <sys_id>d68d05a2b33513009b67a13816a8dcb8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Thing One</sys_name>
+        <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+        <sys_update_name>sys_metadata_link_d68d05a2b33513009b67a13816a8dcb8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-03 22:18:27</sys_updated_on>
+        <tablename>x_bn_thing</tablename>
+    </sys_metadata_link>
+</record_update>

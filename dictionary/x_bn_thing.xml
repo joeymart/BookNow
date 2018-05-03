@@ -5,7 +5,6 @@
         <element label="Location" max_length="32" name="location" reference="x_bn_location" type="reference"/>
         <element display="true" label="Name" max_length="100" name="name" type="string"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
-        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
         <index name="index">
             <element name="location"/>
         </index>
