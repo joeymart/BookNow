@@ -22,10 +22,13 @@
 	var user = getSafeValue("user") || gs.getUserID();
 	
 	var thing_record = new GlideRecordSecure(table);
+	gs.debug("Is thing valid? {0}", thing_record.isValid());
+	
 	if (!thing_record.isValid()) {
 		response.setError(new sn_ws_err.NotFoundError(gs.getMessage('No reservation found')));
 		return;
 	}
+	
 	thing_record.addQuery("sys_id", thing);
 	thing_record.query();
 	
@@ -42,19 +45,31 @@
 	//we found a thing
 	thing_record.next();
 	
+	//do our dates make sense?
+	var fromGDT = new GlideDateTime();
+	fromGDT.setValue(parseInt(start_time, 10));
+	
+	var untilGDT = new GlideDateTime();
+	untilGDT.setValue(parseInt(end_time, 10));
+	
 	var tr = new ThingReserver();
-	var reservation = tr.reserve(thing, start_time, end_time, user);
+	var reservation = tr.reserve(thing_record, fromGDT, untilGDT, user);
 	
 	if(!reservation) {
 		response.setError(new sn_ws_err.NotFoundError(gs.getMessage('Unable to create reservation')));
 		return;
 	}
 	
-	return reservation;
+	return { "number" : reservation.getValue("number"),
+			"sys_id" : reservation.getUniqueValue()
+		   };
 	
 	function getSafeValue(val) {
+
 		if (params.hasOwnProperty(val))
 			return params[val] + '';
+		
+		gs.debug("No value for {0} found in params", val);
 		
 		return '';
 	}
@@ -63,23 +78,30 @@
         <produces>application/json,application/xml,text/xml</produces>
         <produces_customized>false</produces_customized>
         <relative_path>/reservation</relative_path>
-        <request_example/>
+        <request_example>{&#13;
+   "thing"  : "5b3c41a2b33513009b67a13816a8dce9",&#13;
+    "thing_table" : "x_bn_thing",&#13;
+    "start_time" : "1525386189999",&#13;
+    "end_time" : "1525387989999",&#13;
+    "user" : "62826bf03710200044e0bfc8bcbe5df1"&#13;
+}&#13;
+    </request_example>
         <requires_acl_authorization>true</requires_acl_authorization>
         <requires_authentication>true</requires_authentication>
         <requires_snc_internal_role>true</requires_snc_internal_role>
-        <short_description/>
+        <short_description>The POST body has to contain the necessary info to make a reservation</short_description>
         <sys_class_name>sys_ws_operation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-04-25 20:26:14</sys_created_on>
         <sys_id>472d5bffb32113009b67a13816a8dca9</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name>Make reservation</sys_name>
         <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
         <sys_policy/>
         <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
         <sys_update_name>sys_ws_operation_472d5bffb32113009b67a13816a8dca9</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-04-25 20:26:14</sys_updated_on>
+        <sys_updated_on>2018-05-03 23:05:16</sys_updated_on>
         <web_service_definition display_value="Reserve a Thing">5a9d473fb32113009b67a13816a8dc1a</web_service_definition>
         <web_service_version display_value="v1">d24e873fb32113009b67a13816a8dc51</web_service_version>
     </sys_ws_operation>

@@ -15,6 +15,10 @@
 			template += "Chicago, IL" + "</br />";
 			template += "<a href='/x_bn_location.do?sys_id=" + point.sys_id + "'>Click</a>";
 			return template;
+		},
+		
+		getCustomMarker : function() {
+			return "/landmark.png";
 		}
 	}
 }(pinRegistry));]]></script>
@@ -23,14 +27,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-04-25 22:47:11</sys_created_on>
         <sys_id>6d800cc4b37113009b67a13816a8dc03</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>x_bn.PointAdder</sys_name>
         <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
         <sys_policy/>
         <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
         <sys_update_name>sys_ui_script_6d800cc4b37113009b67a13816a8dc03</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-04-25 23:14:32</sys_updated_on>
+        <sys_updated_on>2018-05-02 01:21:37</sys_updated_on>
         <use_scoped_format>false</use_scoped_format>
     </sys_ui_script>
 </record_update>

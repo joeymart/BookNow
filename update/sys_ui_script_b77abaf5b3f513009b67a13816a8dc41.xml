@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description/>
+        <global>false</global>
+        <name>x_bn.DivvyTemplate</name>
+        <script><![CDATA[(function(pinRegistry) {
+	var table = "x_bn_dock";
+	var fields = "name,latitude,longitude,comment,sys_id";
+
+	function reserveThing(reservation, callback) {
+        var xhttp = new XMLHttpRequest();
+        var ENDPOINT = "/api/x_bn/reserve_a_thing/reservation";
+        xhttp.open("POST", ENDPOINT);
+		xhttp.addEventListener("error", function() { 
+			console.error("Connection error", xhttp);
+		});
+
+		xhttp.addEventListener("load", function() {
+			var responseObj = JSON.parse(xhttp.response);
+			if (responseObj.result)
+				callback(responseObj.result);
+			else
+				console.error("No result for query", xhttp);
+        });
+
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("X-UserToken", window.g_ck);
+        xhttp.send(JSON.stringify(reservation));
+
+        return xhttp;
+    }
+	
+	
+	function findABike(sys_id, callback) {
+        var xhttp = new XMLHttpRequest();
+		var GETSTRING = "/api/now/table/x_bn_bike";
+		var QUERY = "?sysparm_query=location%3D" + sys_id + "^active%3Dtrue^condition>%3D3";
+		QUERY +="&sysparm_limit=1";
+		
+        xhttp.open("GET", GETSTRING + QUERY);
+		xhttp.addEventListener("error", function() { 
+			console.error("Connection error", xhttp);
+		});
+
+		xhttp.addEventListener("load", function() {
+			var responseObj = JSON.parse(xhttp.response);
+			if (responseObj.result)
+				callback(responseObj.result);
+			else
+				console.error("No result for query", xhttp);
+        });
+
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("X-UserToken", window.g_ck);
+        xhttp.send();
+
+        return xhttp;
+	}
+	
+	pinRegistry["x_bn_dock"] = {
+		getPoints : function(SWpoint, NEpoint, callback) {
+			x_bn.GetPoints.getPointsForTable(table, fields, SWpoint, NEpoint, callback);
+		},
+
+		getTemplate : function(point) {
+			var template = "<b>" + point.name + "</b><br />";
+			template += point.comment + "<br />";
+			template += "Chicago, IL" + "</br />";
+			template += "<a href='javascript:pinRegistry[\"x_bn_dock\"].makeReservation(\"" + point.sys_id + "\")'>Click</a>";
+			template += "<br /><br /><div id='" + point.sys_id + "'></div>";
+			return template;
+		},
+		
+		getCustomMarker : function() {
+			return "/bike.png";
+		},
+		
+		makeReservation : function(sys_id) {
+			
+			return findABike(sys_id, (result) => {
+				result = result[0];
+				
+				var reservation = {};
+				reservation.thing_table = "x_bn_bike";
+				reservation.thing = result.sys_id;
+				reservation.start_time = Date.now();
+				reservation.end_time = Date.now() + (60 * 60 * 1000);
+				
+				reserveThing(reservation, (result) => {
+					document.getElementById(sys_id).innerHTML="Congrats! You have reservation " + result.number;
+				});
+			})
+		}
+	}
+}(pinRegistry));]]></script>
+        <script_name>DivvyTemplate</script_name>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-01 22:19:49</sys_created_on>
+        <sys_id>b77abaf5b3f513009b67a13816a8dc41</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>x_bn.DivvyTemplate</sys_name>
+        <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+        <sys_update_name>sys_ui_script_b77abaf5b3f513009b67a13816a8dc41</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-04 00:49:53</sys_updated_on>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="x_bn_thing" label="Bike" max_length="40" name="x_bn_bike" type="collection">
+        <element label="Comment" max_length="1000" name="comment" type="string"/>
+        <element choice="1" label="Condition" max_length="40" name="condition" type="choice">
+            <choice>
+                <element label="Like new" sequence="1" value="4"/>
+                <element label="Fair" sequence="2" value="3"/>
+                <element label="Major wear" sequence="3" value="2"/>
+                <element label="Inoperable" sequence="4" value="1"/>
+            </choice>
+        </element>
+        <element label="Serial number" max_length="100" name="serial_number" type="string"/>
+    </element>
+</database>

@@ -16,7 +16,7 @@ ThingReserver.prototype = {
     },
 	
 	canReserve : function(/*GlideRecord*/ thing, /*GlideDateTime*/ from, /*GlideDateTime*/ until, /*User sys_id*/ by) {
-		
+
 		if (!this._hasRequiredParams(thing, from, until, by))
 			return false;
 		
@@ -44,7 +44,8 @@ ThingReserver.prototype = {
 		return !reservations.hasNext();
 	},
 	
-	reserve : function(/*GlideRecord*/ thing, /*GlideDateTime*/ from, /*GlideDateTime*/ until, /*GlideRecord*/ by) {
+	reserve : function(/*GlideRecord*/ thing, /*GlideDateTime*/ from, /*GlideDateTime*/ until, /*sys_id*/ by) {
+
 		if (!this.canReserve(thing, from, until, by)) {
 			return false;
 		}
@@ -66,7 +67,8 @@ ThingReserver.prototype = {
 		return false;
 	},
 	
-	cancelReservation : function(/*GlideRecord*/ thing, /*GlideDateTime*/ from, /*GlideDateTime*/ until, /*GlideRecord*/ by) {
+	cancelReservation : function(/*GlideRecord*/ thing, /*GlideDateTime*/ from, /*GlideDateTime*/ until, /*sys_id*/ by) {
+		
 		var reservation = new GlideRecord(this.R_TABLE);
 		reservation.addQuery("thing", thing.getValue("sys_id"));
 		reservation.addQuery("thing_table", thing.getRecordClassName());
@@ -83,6 +85,7 @@ ThingReserver.prototype = {
 	},
 	
 	nextAvailableReservation : function(/*GlideRecord*/ thing) {
+		
 		//this is a really simplistic model that just returns 5 minutes later than the end date for the last reservation
 		var reservation = new GlideRecord(this.R_TABLE);
 		reservation.addQuery("thing", thing.getUniqueValue());
@@ -128,13 +131,13 @@ ThingReserver.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-04-25 16:13:53</sys_created_on>
         <sys_id>f6db6ab7b32113009b67a13816a8dc96</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>ThingReserver</sys_name>
         <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
         <sys_update_name>sys_script_include_f6db6ab7b32113009b67a13816a8dc96</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-04-25 20:26:29</sys_updated_on>
+        <sys_updated_on>2018-05-03 23:06:25</sys_updated_on>
     </sys_script_include>
 </record_update>

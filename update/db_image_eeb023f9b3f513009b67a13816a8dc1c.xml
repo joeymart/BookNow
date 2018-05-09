@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="db_image">
+    <db_image action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>general</category>
+        <format/>
+        <height/>
+        <image>06e0aff5b3f513009b67a13816a8dcb7</image>
+        <name>landmark.png</name>
+        <size_bytes/>
+        <sys_class_name>db_image</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-02 01:06:41</sys_created_on>
+        <sys_id>eeb023f9b3f513009b67a13816a8dc1c</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>landmark.png</sys_name>
+        <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+        <sys_update_name>db_image_eeb023f9b3f513009b67a13816a8dc1c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-02 01:06:53</sys_updated_on>
+        <thumbnail/>
+        <width/>
+    </db_image>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color>#e61e1e</average_image_color>
+        <chunk_size_bytes>734003</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>image/png</content_type>
+        <file_name>landmark.png</file_name>
+        <image_height>37</image_height>
+        <image_width>32</image_width>
+        <size_bytes>661</size_bytes>
+        <size_compressed>684</size_compressed>
+        <state>available</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-02 01:06:52</sys_created_on>
+        <sys_id>06e0aff5b3f513009b67a13816a8dcb7</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-05-02 01:06:53</sys_updated_on>
+        <table_name>ZZ_YYdb_image</table_name>
+        <table_sys_id>eeb023f9b3f513009b67a13816a8dc1c</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>H4sIAAAAAAAAAA==</data>
+        <length>16</length>
+        <position>0</position>
+        <sys_attachment display_value="landmark.png" sys_id="06e0aff5b3f513009b67a13816a8dcb7">06e0aff5b3f513009b67a13816a8dcb7</sys_attachment>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-02 01:06:52</sys_created_on>
+        <sys_id>0ee0aff5b3f513009b67a13816a8dcb7</sys_id>
+    </sys_attachment_doc>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>AZUCav2JUE5HDQoaCgAAAA1JSERSAAAAIAAAACUIBgAAACO360cAAAAJcEhZcwAACxMAAAsTAQCanBgAAAJHSURBVFiF7Ze7ittAFIY/G8dxHGPcbCDVNkbVhhBSmbTy1vsEfgW9hXu/gp5gexWugqslBNyscLNVIKRYgrMRspBS+BxnbOSLxlJIIAeGMR5G/3fO/LqcWpZlAAyHwwZQB5oyNyg3EiAFYiANgiABqGVZpuJNoCWjKQD1ksRTAYiBSEYcBEFSc11XxdtAV+YW1VQgAp6A7zLHmmVLxF/5YTgrWXgrRo4zkJ8pkJilb/thOOtNJjy7uqLR75cqnCwWrOZzfM+bjRznDXIMpvFaQCXiwO411Wd1dbuOQuJfLi9tITaa6nIrt19MpzbbNOpKYhVm9q8fHqwprAHOzP48gLyzt62CFUBZ2VsBHHK+TRXKetZbhxWAZro7/zGAMsMKQH2wO1cOsLq/P2v9bIBv19fAfg/oemUAVcS/5YEq4v9z4K/xQFp0Y3c85mI6pTse22qnsH4bJsYgWSxo9Pv88P2Du58PBluzRt6+l6MRem2JjWaD3+1SBLCaz7c25V1oN04xoX6WS0SimdZc120CHaDHgcakN5nw4ubmqBDAz9tbHj0vd00ak6/AI7DUCkSs2yWkaTBbszqA73kfgaMQKj5ynA/yl/prtzWLgPSU5nTzDe+H4d2hShji79n21v7m9Eh7rrPZvn3KgzDE30mWes4mQH57figErMXaJx2B+GxCGOJvRXwpI1KhfXEUYA9ERysBmJkvKSB+MkAORFcg7gA98yVrc50sXghgB6ItoylLMevSPxURLwxgQKgp9VbVWywuIg7wC50AMN4kA3GtAAAAAElFTkSuQmCC1/+A05UCAAA=</data>
+        <length>900</length>
+        <position>1</position>
+        <sys_attachment display_value="landmark.png" sys_id="06e0aff5b3f513009b67a13816a8dcb7">06e0aff5b3f513009b67a13816a8dcb7</sys_attachment>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-05-02 01:06:52</sys_created_on>
+        <sys_id>8ee0aff5b3f513009b67a13816a8dcb7</sys_id>
+    </sys_attachment_doc>
+</record_update>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_extension_point">
+    <sys_extension_point action="INSERT_OR_UPDATE">
+        <api_name>x_bn.CanReserve</api_name>
+        <description>This Extension Point handles the decision for whether a particular type of Thing can be reserved. Implementations must provide two methods:&#13;
+&#13;
+"canReserve" method that takes in four arguments (below) and returns a boolean:&#13;
+    GlideRecord for a Thing to be reserved&#13;
+    GlideDateTime representing the requested start date of the reservation&#13;
+    GlideDateTime representing the requested end date of the reservation&#13;
+    User object representing the User making the request&#13;
+"handles" method that takes in a single argument (below) and returns a boolean:&#13;
+    GlideRecord representing the Thing to be reserved</description>
+        <example><![CDATA[var CanReserve = Class.create();
+CanReserve.prototype = {
+
+    canReserve: function(/*GlideRecord*/ thing, /*GlideDateTime*/ from, /*GlideDateTime*/ until, /*GlideRecord*/ by) {
+        return true;
+    },
+	
+	handles : function(/*GlideRecord*/ thing) {
+		return false;
+	},
+
+    type: 'CanReserve'
+};]]></example>
+        <name>CanReserve</name>
+        <restrict_scope>false</restrict_scope>
+        <sys_class_name>sys_extension_point</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-04-30 21:11:43</sys_created_on>
+        <sys_id>c88061a9b37513009b67a13816a8dc96</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CanReserve</sys_name>
+        <sys_package display_value="BookNow" source="x_bn">fa506eb3b32113009b67a13816a8dc58</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookNow">fa506eb3b32113009b67a13816a8dc58</sys_scope>
+        <sys_update_name>sys_extension_point_c88061a9b37513009b67a13816a8dc96</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-04-30 21:11:43</sys_updated_on>
+    </sys_extension_point>
+</record_update>
